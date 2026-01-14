@@ -1,0 +1,15 @@
+Objectivo: Criar uma apI RESTFULl para controle de produtos
+Modelo
+
+Produto:id, nome, descricao, quantidade, valor,observacao
+
+Repositorio de Usuario:
+obtertodos, obterPorId, adicionar, atualizar, deletar.
+
+Servico de Produto:
+obtertodos, obterPorId, adicionar, atualizar, deletar.
+
+Controller do Produto:
+obtertodos, obterPorId, adicionar, atualizar, deletar.
+
+
