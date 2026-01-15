@@ -1,13 +1,22 @@
-FROM  ubuntu:latest AS build
+# Build stage
+FROM maven:3.9-eclipse-temurin-21 AS builder
 
-RUN apt-get update
-RUN apt-get install openjdk-21-jdk -y
-COPY . .
+WORKDIR /app
 
-RUN apt-get- install marven -y
-RUN mvn clean install
+COPY pom.xml .
+COPY src ./src
 
-FROM openjdk:21-jdk-slim
+RUN mvn clean package -DskipTests
+
+# Runtime stage
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+COPY --from=builder /app/target/primeiro-exemplo-0.0.1-SNAPSHOT.jar app.jar
+
 EXPOSE 8081
-COPY  --from=build /target/primeiro-exemplo-0.0.1-SNAPSHOT.jar  app.jar
-ENTRYPOINT [ "java","-jar","app.jar" ]
+
+ENV PORT=8081
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
